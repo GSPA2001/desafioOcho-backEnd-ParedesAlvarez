@@ -1,0 +1,37 @@
+<div class='container mt-1 rounded bg-danger text-white bg-opacity-75'>
+    <h1 class='text-center mb-4'>{{title}}</h1>
+    <h2 class='text-center text-muted text-uppercase py-2'>{{userName}}</h2>
+    <hr class='text-white' />
+    <h2 class='text-center text-muted text-uppercase py-2'>{{userRol}}</h2>
+    <div class="text-center" style="margin-top: 10px">
+        <form action="/api/sessions/logout" method="get" style="margin-bottom: 24px;">
+            <button type="submit" class="btn btn-outline-light">Salir</button>
+        </form>
+    </div>
+    <table class='table table-bordered table-striped table-hover text-center'>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Código</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+                <tr>
+                    <td class='text-start'>{{this.title}}</td>
+                    <td class='text-start'>{{this.description}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.code}}</td>
+                    <td>{{this.stock}}</td>
+                    <td>
+                        <a href='#' class='btn btn-success btn-sm addToCart' data-product-id="{{this._id}}">Agregar al Carrito</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
