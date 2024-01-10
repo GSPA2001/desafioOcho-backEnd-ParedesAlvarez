@@ -102,8 +102,8 @@ router.get('/githubcallback', passport.authenticate('githubAuth', { failureRedir
     try{
 
         await User.findOneAndUpdate(
-        { email: req.user.email }, // Busco por mail y ->
-        { $set: { rol: 'ADMIN'} }, // actualizo el ROL segun quiera, hardcodeado.
+        { email: req.user.email }, // Busco por email y ->
+        { $set: { rol: 'ADMIN'} }, // actualizo el ROL segun quiera
         { new: true }
         );
 
@@ -120,10 +120,22 @@ router.get('/githubcallback', passport.authenticate('githubAuth', { failureRedir
     
 })
 
+router.get('/current', (req, res) => {
+    // Verifica si hay un usuario almacenado en la sesión
+    if (req.user) {
+        // Devuelve el usuario actual en la respuesta
+        const user = req.user
+        res.status(200).send({ message: 'Inicio de sesión exitoso', user })
+    } else {
+        // Si no hay usuario en la sesión, devuelve un mensaje indicando que no está autenticado
+        res.redirect('/login');
+    }
+});
+
 // Endpoint de login para autenticarse
 router.post('/login', passport.authenticate('loginAuth', { failureRedirect: '/api/sessions/failauth' }), async (req, res) => {
     try {
-        res.redirect('/products')
+        res.redirect('/api/sessions/current')
     } catch (err) {
         res.status(500).send({ status: 'ERR', data: err.message })
     }

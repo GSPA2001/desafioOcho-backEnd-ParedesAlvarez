@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
     email: { type: String, required: true },
     age: { type: Number },
     password: { type: String, required: true },
+    cart: { type: mongoose.Schema.Types.ObjectId }, 
     rol: { type: String, default: '' },
 });
 

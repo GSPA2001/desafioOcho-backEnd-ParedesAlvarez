@@ -6,6 +6,17 @@
     </div>    
     <h2 class='text-center mb-4'>{{userName}}</h2>
     <h2 class='text-center mb-4'>{{userRol}}</h2>
+    <div class="mt-4">
+        <div class="text-center" style="margin-top: 32px">
+            <a class="btn btn-outline-success" href="/" role="button">Index</a>
+        </div>
+        <div class="text-center" style="margin-top: 32px">
+            <a class="btn btn-outline-info" href="/products" role="button">Productos</a>
+        </div>
+        <div class="text-center" style="margin-top: 32px">
+            <a class="btn btn-outline-info" href="/cookies" role="button">Cookie</a>
+        </div>
+    </div>
     <div class="float-end">
         <form action="/api/sessions/logout" method="get">
             <button type="submit" class="btn btn-danger">Salir</button>

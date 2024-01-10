@@ -4,16 +4,17 @@ import GithubStrategy from 'passport-github2'
 import User from '../models/user.model.js'
 import { createHash, isValidPassword, generateToken, authToken } from '../utils.js'
 import config from '../config.js'
+import mongoose from 'mongoose'
 
 const initPassport = () => {
 
     // Funcion para verificar el registro
     const verifyRegistration = async (req, username, password, done) => {
         try {
-            const { first_name, last_name, email, age } = req.body;
+            const { first_name, last_name, email, age, cartID } = req.body;
 
             if (!first_name || !last_name || !email || !age) {
-                return done('Se requiere first_name, last_name, email y gender en el body', false);
+                return done('Se requiere first_name, last_name, email, age, cart y password en el body', false);
             }
 
             const user = await User.findOne({ email: username });
@@ -27,6 +28,7 @@ const initPassport = () => {
                 last_name,
                 email,
                 age,
+                cart: mongoose.Types.ObjectId.isValid(cartID) ? mongoose.Types.ObjectId(cartID) : null,
                 password: createHash(password)
             };
 
@@ -46,10 +48,9 @@ const initPassport = () => {
             const usuario = await User.findOne({ email: mail });
     
             if (usuario && isValidPassword(usuario, pass)) {
-                // Autenticación exitosa
-                // Aca tuve que darle el rol al usuario en la DB porque no lograba darselo hardcodeado y me volvi loco intentando.
-                usuario.rol = 'ADMIN'
-                await usuario.save()
+                // Autenticación exitosa, crea usuario
+                req.session.user = usuario
+                return done(null, usuario);
                 // Autenticación exitosa, llamamos a done con el usuario como segundo argumento
                 return done(null, usuario);
             } else {
@@ -93,7 +94,7 @@ const initPassport = () => {
     // Creamos una estrategia local de autenticacion para login
     passport.use('loginAuth', new LocalStrategy({
         passReqToCallback: true,
-        usernameField: 'mail', // Campo en el formulario que contiene el nombre de usuario o correo electrónico
+        usernameField: 'email', // Campo en el formulario que contiene el nombre de usuario o correo electrónico
         passwordField: 'pass', // Campo en el formulario que contiene la contraseña
     }, verifyLogin));
     

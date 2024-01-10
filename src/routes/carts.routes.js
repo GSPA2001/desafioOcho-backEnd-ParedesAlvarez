@@ -1,25 +1,26 @@
 import { Router } from 'express'
 import { CartController } from '../controllers/cart.controller.mdb.js'
+import cartModel from '../models/cart.model.js'
 
 const router = Router()
 const controller = new CartController()
 
 router.get('/', async (req, res) => {
-    try {
-      const limit = req.query.limit;
-      const carts = await cartModel.find().lean().exec();
-  
-      if (limit) {
-        const limitedCarts = carts.slice(0, limit);
-        res.status(206).json(limitedCarts);
-      } else {
-        res.status(200).json({ carts: carts });
-      }
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ status: 'error', error: err.message });
+  try {
+    const limit = req.query.limit;
+    const carts = await controller.getCarts();
+
+    if (limit) {
+      const limitedCarts = carts.slice(0, limit);
+      res.status(206).json(limitedCarts);
+    } else {
+      res.status(200).json({ carts: carts });
     }
-  });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ status: 'error', error: err.message });
+  }
+});
 
 router.get('/:cid', async (req, res) => {
     try {
@@ -41,43 +42,6 @@ router.put('/:cid', async (req, res) => {
       res.json({ status: 'success', payload: updatedCart });
     } catch (err) {
       return res.status(500).json({ status: 'error', error: err.message });
-    }
-});
-
-router.put('/:cid/products/:pid/quantity', async (req, res) => {
-    try {
-      const { cid, pid } = req.params;
-      const newQuantity = req.body.quantity;
-  
-      const cart = await cartModel.findById(cid);
-      if (!cart) {
-        return res.status(404).json({ error: 'Cart not found' });
-      }
-  
-      const productIndex = cart.products.findIndex(item => item.product.toString() === pid);
-  
-      if (productIndex !== -1) {
-        cart.products[productIndex].quantity = newQuantity;
-        await cart.save();
-  
-        // Notificar al usuario sobre el cambio
-        const user = await userModel.findById(cart.userId);
-  
-        if (user) {
-          const notification = {
-            type: 'cart',
-            message: `Product ${cart.products[productIndex].title} quantity updated to ${newQuantity}`,
-          };
-          await userModel.updateOne({ _id: user._id }, { notifications: [...user.notifications, notification] });
-        }
-  
-        res.status(200).json({ message: 'Quantity updated successfully', payload: cart });
-      } else {
-        return res.status(404).json({ error: 'Product not found in the cart' });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
     }
 });
 

@@ -1,4 +1,30 @@
-[{"first_name":"Orly","last_name":"Restall","email":"orestall0@multiply.com","gender":"Female"},
+[{
+	"first_name": "Juan",
+	"last_name": "Apellido",
+	"email": "j@example.com",
+	"age": "18",
+	"password": "contraseña",
+	"cart":"001",
+	"rol": "user"
+},
+{
+	"first_name": "Coder",
+	"last_name": "House",
+	"email": "adminCoder@coder.com",
+	"age": "18",
+	"password": "contraseña",
+	"cart":"002",
+	"rol": "ADMIN"
+},
+{
+	"first_name": "Dr. House",
+	"last_name": "Digital",
+	"email": "digitalhouse@example.com",
+	"age": "22",
+	"password": "contraseña",
+	"cart":"003",
+	"rol": "ADMIN"
+},{"first_name":"Orly","last_name":"Restall","email":"orestall0@multiply.com","gender":"Female"},
 {"first_name":"Ingeborg","last_name":"Lowings","email":"ilowings1@unesco.org","gender":"Female"},
 {"first_name":"Dani","last_name":"Cracknell","email":"dcracknell2@pcworld.com","gender":"Female"},
 {"first_name":"Frederico","last_name":"Hulstrom","email":"fhulstrom3@dion.ne.jp","gender":"Male"},
@@ -1266,7 +1292,7 @@
   {"first_name":"Cindra","last_name":"Kolushev","email":"ckolushev7d@deliciousdays.com","gender":"Bigender"},
   {"first_name":"Allie","last_name":"Tiley","email":"atiley7e@privacy.gov.au","gender":"Male"},
   {"first_name":"Milo","last_name":"Rome","email":"mrome7f@freewebs.com","gender":"Male"},
-  {"first_name":"Dew","last_name":"Roller","email":"droller7g@admin.ch","gender":"Male"},
+  {"first_name":"Dew","last_name":"Roller","email":"droller7g@.ch","gender":"Male"},
   {"first_name":"Travus","last_name":"Chiese","email":"tchiese7h@bigcartel.com","gender":"Male"},
   {"first_name":"Jessamine","last_name":"Reihill","email":"jreihill7i@deviantart.com","gender":"Female"},
   {"first_name":"Brennan","last_name":"Sherebrooke","email":"bsherebrooke7j@dailymotion.com","gender":"Male"},

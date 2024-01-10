@@ -15,7 +15,6 @@ router.get('/', async (req, res) => {
 
 // Podemos modificar el método getUsersPaginated() del controlador
 // para recibir parámetros que obtengamos aquí mediante req.params o req.query
-// http://localhost:5000/api/users/paginated?limit=100&page=2&sort=desc
 router.get('/paginated', async (req, res) => {
     try {
         const users = await controller.getUsersPaginated()
